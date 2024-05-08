@@ -1,0 +1,74 @@
+function onload()
+
+--load buttons
+    local button = {}
+
+--Discard Top Card
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, -0.5}
+    button.rotation = {0, 0, 0}
+    button.click_function = "discardTopTeal"
+    button.label = 'Check / Discard Top'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+
+    self.createButton(button)
+
+--Random Discard
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, 0.4}
+    button.rotation = {0, 0, 0}
+    button.click_function = "randomDiscard"
+    button.label = 'Random Discard'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+    self.createButton(button)
+
+
+end
+
+--Discard Random
+function randomDiscard()
+  HandTeal = Player["Teal"].getHandObjects(1)
+  local rand = math.random(1,#HandTeal)
+  HandTeal[rand].use_hands = false
+  HandTeal[rand].setPositionSmooth({-73.57, 4.93, 7.09})
+  Wait.time(|| handtime(HandTeal[rand]), 0.3)
+end
+function handtime(ColorHand)
+  ColorHand.use_hands = true
+end
+
+
+---DiscardTopCard
+function discardTopTeal()
+  deckTeal = getObjectFromGUID("8c2a74").getObjects()
+  if deckTeal[1].tag == "Deck" then
+    deckTeal[1].takeObject({
+      position = {-73.57, 4.93, 7.09},  -- Corrected position syntax
+      flip = true,
+    })
+  else
+    deckTeal[1].flip()
+    deckTeal[1].setPositionSmooth({-73.57, 4.93, 7.09})  -- Corrected position syntax
+    Wait.time(|| NewDeckTeal(), 1.5)
+  end
+end
+
+--DeckCycle
+function NewDeckTeal()
+  discardTeal = getObjectFromGUID("adacc3").getObjects()
+  discardTeal[1].flip()
+  discardTeal[1].setPositionSmooth({-69.99, 2.57, 7.00})  -- Corrected position syntax
+  discardTeal[1].shuffle()
+  Wait.time(function() discardTeal[1].takeObject({
+    position = {-77.80, 4.64, 7.00},  -- Corrected position syntax
+    flip = true,
+  }) end, 0.3, 10)
+end
+
+

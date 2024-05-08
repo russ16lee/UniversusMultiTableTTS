@@ -1,0 +1,70 @@
+function onload()
+
+--load buttons
+    local button = {}
+
+--Discard Top Card
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, -0.5}
+    button.rotation = {0, 0, 0}
+    button.click_function = "discardTopGreen"
+    button.label = 'Check / Discard Top'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+
+    self.createButton(button)
+
+--Random Discard
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, 0.4}
+    button.rotation = {0, 0, 0}
+    button.click_function = "randomDiscard"
+    button.label = 'Random Discard'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+    self.createButton(button)
+
+
+end
+---Discard
+function randomDiscard()
+  HandGreen = Player["Blue"].getHandObjects(1)
+
+  local rand = math.random(1,#HandGreen)
+  HandGreen[rand].use_hands = false
+  HandGreen[rand].setPositionSmooth({-14.14, 1.83, 6.70})
+  Wait.time(|| handtime(HandGreen[rand]), 0.3)
+end
+function handtime(ColorHand)
+  ColorHand.use_hands = true
+end
+
+---DiscardTopCard
+function discardTopGreen()
+  deckGreen = getObjectFromGUID("bb2870").getObjects()
+  if deckGreen[1].tag == "Deck" then
+    deckGreen[1].takeObject({
+      position          = {-14.14, 1.83, 6.70},
+      flip              = true,
+    })
+  else
+    deckGreen[1].flip()
+    deckGreen[1].setPositionSmooth({-14.14, 1.83, 6.70})
+    Wait.time(|| NewDeckGreen(), 1.5)
+  end
+end
+function NewDeckGreen()
+  discardGreen = getObjectFromGUID("a43ab5").getObjects()
+  discardGreen[1].flip()
+  discardGreen[1].setPositionSmooth({-10.62, 1.03, 6.69})
+  discardGreen[1].shuffle()
+  Wait.time(|| discardGreen[1].takeObject({
+    position          = {-18.04, 3.51, 6.68},
+    flip              = true,
+  }), 0.3, 10)
+end
+

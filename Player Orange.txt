@@ -1,0 +1,72 @@
+function onload()
+
+--load buttons
+    local button = {}
+
+--Discard Top Card
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, -0.5}
+    button.rotation = {0, 0, 0}
+    button.click_function = "discardTopOrange"
+    button.label = 'Check / Discard Top'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+
+    self.createButton(button)
+
+--Random Discard
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, 0.4}
+    button.rotation = {0, 0, 0}
+    button.click_function = "randomDiscard"
+    button.label = 'Random Discard'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+    self.createButton(button)
+
+
+end
+
+--Discard Random
+function randomDiscard()
+  HandOrange = Player["Orange"].getHandObjects(1)
+  local rand = math.random(1,#HandOrange)
+  HandOrange[rand].use_hands = false
+  HandOrange[rand].setPositionSmooth({-44.60, 4.90, -8.31})
+  Wait.time(|| handtime(HandOrange[rand]), 0.3)
+end
+function handtime(ColorHand)
+  ColorHand.use_hands = true
+end
+
+
+---DiscardTopCard
+function discardTopOrange()
+  deckOrange = getObjectFromGUID("cef9d7").getObjects()
+  if deckOrange[1].tag == "Deck" then
+    deckOrange[1].takeObject({
+      position = {-44.60, 4.90, -8.31},  -- Corrected position syntax
+      flip = true,
+    })
+  else
+    deckOrange[1].flip()
+    deckOrange[1].setPositionSmooth({-44.60, 4.90, -8.31})  -- Corrected position syntax
+    Wait.time(|| NewDeckOrange(), 1.5)
+  end
+end
+
+--DeckCycle
+function NewDeckOrange()
+  discardOrange = getObjectFromGUID("1d8e0a").getObjects()
+  discardOrange[1].flip()
+  discardOrange[1].setPositionSmooth({-40.43, 4.97, -8.34})  -- Corrected position syntax
+  discardOrange[1].shuffle()
+  Wait.time(function() discardOrange[1].takeObject({
+    position = {-48.23, 4.90, -8.38},  -- Corrected position syntax
+    flip = true,
+  }) end, 0.3, 10)
+end

@@ -1,0 +1,204 @@
+--[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
+
+--[[ The onLoad event is called after the game save finishes loading. --]]
+function onLoad()
+    addHotkey("Make Check", makeCheck, false)
+end
+
+---DiscardTopCard
+function makeCheck(color, hovered, pointer, up)
+  if color == "Red" then
+    discardTopRed()
+  elseif color == "Blue" then
+    discardTopBlue()
+  elseif color == "Green" then
+    discardTopGreen()
+  elseif color == "Teal" then
+    	discardTopTeal()
+  elseif color == "Brown" then
+	    discardTopBrown()
+  elseif color == "Orange" then
+	    discardTopOrange()
+  end
+end
+
+
+---DiscardTopCard
+function discardTopBlue()
+  deckBlue = getObjectFromGUID("dadd0e").getObjects()
+  if deckBlue[1].tag == "Deck" then
+    deckBlue[1].takeObject({
+      position          = {44.15, 4.94, 7.17},
+      flip              = true,
+    })
+  else
+    deckBlue[1].flip()
+    deckBlue[1].setPositionSmooth({44.15, 4.94, 7.17})
+    Wait.time(|| NewDeckBlue(), 1.5)
+  end
+end
+function NewDeckBlue()
+  discardBlue = getObjectFromGUID("a3b36a").getObjects()
+  discardBlue[1].flip()
+  discardBlue[1].setPositionSmooth({47.69, 4.97, 7.18})
+  discardBlue[1].shuffle()
+  Wait.time(|| discardBlue[1].takeObject({
+    position          = {40.00, 4.64, 7.10},
+    flip              = true,
+  }), 0.3, 10)
+end
+
+
+
+
+
+function discardTopRed()
+  deckRed = getObjectFromGUID("ff12ce").getObjects()
+  if deckRed[1].tag == "Deck" then
+    deckRed[1].takeObject({
+      position          = {13.55, 3.56, -7.85},
+      flip              = true,
+    })
+  else
+    deckRed[1].flip()
+    deckRed[1].setPositionSmooth({13.55, 3.56, -7.85})
+    Wait.time(|| NewDeckRed(), 1.5)
+  end
+end
+function NewDeckRed()
+  discardRed = getObjectFromGUID("b98f37").getObjects()
+  discardRed[1].flip()
+  discardRed[1].setPositionSmooth({10.01, 3.56, -7.80})
+  discardRed[1].shuffle()
+  Wait.time(|| discardRed[1].takeObject({
+    position          = {17.53, 3.51, -7.85},
+    flip              = true,
+  }), 0.3, 10)
+end
+
+
+
+
+
+---DiscardTopCard
+function discardTopGreen()
+  deckGreen = getObjectFromGUID("bb2870").getObjects()
+  if deckGreen[1].tag == "Deck" then
+    deckGreen[1].takeObject({
+      position          = {-14.14, 1.83, 6.70},
+      flip              = true,
+    })
+  else
+    deckGreen[1].flip()
+    deckGreen[1].setPositionSmooth({-14.14, 1.83, 6.70})
+    Wait.time(|| NewDeckGreen(), 1.5)
+  end
+end
+function NewDeckGreen()
+  discardGreen = getObjectFromGUID("a43ab5").getObjects()
+  discardGreen[1].flip()
+  discardGreen[1].setPositionSmooth({-10.62, 1.03, 6.69})
+  discardGreen[1].shuffle()
+  Wait.time(|| discardGreen[1].takeObject({
+    position          = {-18.04, 3.51, 6.68},
+    flip              = true,
+  }), 0.3, 10)
+end
+
+
+
+
+
+---DiscardTopCard
+function discardTopTeal()
+  deckTeal = getObjectFromGUID("8c2a74").getObjects()
+  if deckTeal[1].tag == "Deck" then
+    deckTeal[1].takeObject({
+      position = {-73.57, 4.93, 7.09},  -- Corrected position syntax
+      flip = true,
+    })
+  else
+    deckTeal[1].flip()
+    deckTeal[1].setPositionSmooth({-73.57, 4.93, 7.09})  -- Corrected position syntax
+    Wait.time(|| NewDeckTeal(), 1.5)
+  end
+end
+
+--DeckCycle
+function NewDeckTeal()
+  discardTeal = getObjectFromGUID("adacc3").getObjects()
+  discardTeal[1].flip()
+  discardTeal[1].setPositionSmooth({-69.99, 2.57, 7.00})  -- Corrected position syntax
+  discardTeal[1].shuffle()
+  Wait.time(function() discardTeal[1].takeObject({
+    position = {-77.80, 4.64, 7.00},  -- Corrected position syntax
+    flip = true,
+  }) end, 0.3, 10)
+end
+
+
+
+
+
+function discardTopOrange()
+    deckOrange = getObjectFromGUID("cef9d7").getObjects()
+    if #deckOrange > 0 then
+        if deckOrange[1].tag == "Deck" then
+            deckOrange[1].takeObject({
+                position = {-44.60, 4.90, -8.31},
+                flip = true,
+            })
+        else
+            deckOrange[1].flip()
+            deckOrange[1].setPositionSmooth({-44.60, 4.90, -8.31})
+            Wait.time(function() NewDeckOrange() end, 1.5)
+        end
+    else
+        print("Error: deckOrange is empty.")
+    end
+end
+
+function NewDeckOrange()
+    discardOrange = getObjectFromGUID("1d8e0a").getObjects()
+    if #discardOrange > 0 then
+        discardOrange[1].flip()
+        discardOrange[1].setPositionSmooth({-40.43, 4.97, -8.34})
+        discardOrange[1].shuffle()
+        Wait.time(function() discardOrange[1].takeObject({
+            position = {-48.23, 4.90, -8.38},
+            flip = true,
+        }) end, 0.3, 10)
+    else
+        print("Error: discardOrange is empty.")
+    end
+end
+
+
+
+
+---DiscardTopCard
+function discardTopBrown()
+  deckBrown = getObjectFromGUID("3654e9").getObjects()
+  if deckBrown[1].tag == "Deck" then
+    deckBrown[1].takeObject({
+      position = {73.01, 4.94, -8.10},  -- Corrected position syntax
+      flip = true,
+    })
+  else
+    deckBrown[1].flip()
+    deckBrown[1].setPositionSmooth({73.01, 4.94, -8.10})  -- Corrected position syntax
+    Wait.time(|| NewDeckBrown(), 1.5)
+  end
+end
+
+--DeckCycle
+function NewDeckBrown()
+  discardBrown = getObjectFromGUID("8b1015").getObjects()
+  discardBrown[1].flip()
+  discardBrown[1].setPositionSmooth({69.45, 4.92, -8.13})  -- Corrected position syntax
+  discardBrown[1].shuffle()
+  Wait.time(function() discardBrown[1].takeObject({
+    position = {77.16, 4.92, -8.07},  -- Corrected position syntax
+    flip = true,
+  }) end, 0.3, 10)
+end

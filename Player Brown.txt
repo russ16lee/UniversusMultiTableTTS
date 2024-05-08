@@ -1,0 +1,72 @@
+function onload()
+
+--load buttons
+    local button = {}
+
+--Discard Top Card
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, -0.5}
+    button.rotation = {0, 0, 0}
+    button.click_function = "discardTopBrown"
+    button.label = 'Check / Mill / Discard'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+
+    self.createButton(button)
+
+--Random Discard
+    button.width = 1800
+    button.height = 300
+    button.function_owner = self
+    button.position = {0, 0.2, 0.4}
+    button.rotation = {0, 0, 0}
+    button.click_function = "randomDiscard"
+    button.label = 'Random Discard'
+    button.font_size = 200
+    button.scale = {0.5,0.5,0.9}
+    self.createButton(button)
+
+
+end
+
+--Discard Random
+function randomDiscard()
+  HandBrown = Player["Brown"].getHandObjects(1)
+  local rand = math.random(1,#HandBrown)
+  HandBrown[rand].use_hands = false
+  HandBrown[rand].setPositionSmooth({73.01, 4.94, -8.10})
+  Wait.time(|| handtime(HandBrown[rand]), 0.3)
+end
+function handtime(ColorHand)
+  ColorHand.use_hands = true
+end
+
+
+---DiscardTopCard
+function discardTopBrown()
+  deckBrown = getObjectFromGUID("3654e9").getObjects()
+  if deckBrown[1].tag == "Deck" then
+    deckBrown[1].takeObject({
+      position = {73.01, 4.94, -8.10},  -- Corrected position syntax
+      flip = true,
+    })
+  else
+    deckBrown[1].flip()
+    deckBrown[1].setPositionSmooth({73.01, 4.94, -8.10})  -- Corrected position syntax
+    Wait.time(|| NewDeckBrown(), 1.5)
+  end
+end
+
+--DeckCycle
+function NewDeckBrown()
+  discardBrown = getObjectFromGUID("8b1015").getObjects()
+  discardBrown[1].flip()
+  discardBrown[1].setPositionSmooth({69.45, 4.92, -8.13})  -- Corrected position syntax
+  discardBrown[1].shuffle()
+  Wait.time(function() discardBrown[1].takeObject({
+    position = {77.16, 4.92, -8.07},  -- Corrected position syntax
+    flip = true,
+  }) end, 0.3, 10)
+end
